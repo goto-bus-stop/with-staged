@@ -62,11 +62,13 @@ You can use it with `pre-commit` for very lightweight linting on `git commit`:
 
 ## Node API
 
-### `withStaged(patterns=['**'], cb)`
+### `withStaged(patterns=['**'], opts={}, cb)`
 
 Get a filtered list of staged files.
 
 `patterns` is an array of [micromatch v2](https://github.com/micromatch/micromatch/tree/2.3.11) glob patterns.
+
+`opts.cwd` can be set to use a different working directory. The default is `process.cwd()`.
 
 `cb` is a Node-style `(err, files)` callback. `files` is an array of file names.
 
