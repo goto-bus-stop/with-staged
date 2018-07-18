@@ -51,10 +51,11 @@ You can use it with `pre-commit` for very lightweight linting on `git commit`:
     "with-staged": "^1.0.0"
   },
   "scripts": {
-    "lint": "standard"
+    "lint": "standard",
+    "lint-staged": "with-staged '**/*.js' -- npm run lint --"
   },
   "pre-commit": [
-    "with-staged '*.js' -- npm run lint --"
+    "lint-staged"
   ]
 }
 ```
@@ -85,7 +86,7 @@ Differences:
 ```json
 {
   "lint-staged": {
-    "*.js": [
+    "**/*.js": [
       "prettier --write",
       "git add"
     ]
@@ -96,8 +97,8 @@ Differences:
 **with-staged**
 
 ```bash
-with-staged '*.js' -- prettier --write
-with-staged '*.js' -- git add
+with-staged '**/*.js' -- prettier --write
+with-staged '**/*.js' -- git add
 ```
 
 ## License
