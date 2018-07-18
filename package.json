@@ -1,7 +1,7 @@
 {
   "name": "with-staged",
   "description": "run a command (like linting) on git staged files",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Renée Kooi <renee@kooi.me>",
   "bugs": {
     "url": "https://github.com/goto-bus-stop/with-staged/issues"
