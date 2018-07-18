@@ -1,0 +1,39 @@
+{
+  "name": "with-staged",
+  "description": "run a command (like linting) on git staged files",
+  "version": "0.0.0",
+  "author": "Renée Kooi <renee@kooi.me>",
+  "bugs": {
+    "url": "https://github.com/goto-bus-stop/with-staged/issues"
+  },
+  "devDependencies": {
+    "standard": "^11.0.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/goto-bus-stop/with-staged",
+  "keywords": [
+    "check",
+    "command",
+    "eslint",
+    "format",
+    "git",
+    "lint",
+    "linter",
+    "staged",
+    "standard"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goto-bus-stop/with-staged.git"
+  },
+  "scripts": {
+    "test": "standard && node test | tap-spec"
+  },
+  "dependencies": {
+    "micromatch": "^2.3.11",
+    "minimist": "^1.2.0"
+  }
+}
