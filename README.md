@@ -69,6 +69,37 @@ Get a filtered list of staged files.
 
 `cb` is a Node-style `(err, files)` callback. `files` is an array of file names.
 
+## Related
+
+[lint-staged](https://github.com/okonet/lint-staged) is the inspiration for this module.
+
+Differences:
+- with-staged is not tested on Windows and probably doesn't work there while lint-staged does
+- with-staged has a tiny dependency tree while lint-staged's is somewhat large
+- with-staged works with older Node versions while lint-staged requires v6+
+- with-staged is configured through command line arguments while lint-staged puts configuration in a separate package.json key
+- with-staged just dumps subprocess output, lint-staged has its own sweet progress UI (may be unnecessary for your use case)
+
+**lint-staged**
+
+```json
+{
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
+```
+
+**with-staged**
+
+```bash
+with-staged '*.js' -- prettier --write
+with-staged '*.js' -- git add
+```
+
 ## License
 
 [Apache-2.0](LICENSE.md)
