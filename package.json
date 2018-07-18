@@ -7,9 +7,11 @@
     "url": "https://github.com/goto-bus-stop/with-staged/issues"
   },
   "devDependencies": {
+    "simple-concat": "^1.0.0",
     "standard": "^11.0.0",
     "tap-spec": "^5.0.0",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "tmp": "0.0.33"
   },
   "homepage": "https://github.com/goto-bus-stop/with-staged",
   "keywords": [

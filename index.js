@@ -1,8 +1,8 @@
 var spawn = require('child_process').spawn
 var mm = require('micromatch')
 
-function getStagedFiles (cb) {
-  var proc = spawn('git', ['diff', '--cached', '--name-only'])
+function getStagedFiles (opts, cb) {
+  var proc = spawn('git', ['diff', '--cached', '--name-only'], { cwd: opts.cwd })
   var stdout = ''
   proc.stdout.on('data', function (chunk) { stdout += chunk })
   proc.on('error', cb)
@@ -12,13 +12,26 @@ function getStagedFiles (cb) {
   })
 }
 
-module.exports = function withStaged (patterns, cb) {
+module.exports = function withStaged (patterns, opts, cb) {
+  // withStaged({ cwd: '' }, function () {})
+  if (typeof patterns === 'object' && !Array.isArray(patterns)) {
+    cb = opts
+    opts = patterns
+    patterns = ['**']
+  }
+  // withStaged(['**'], function () {})
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = {}
+  }
+  // withStaged(function () {})
   if (typeof patterns === 'function') {
     cb = patterns
+    opts = {}
     patterns = ['**']
   }
 
-  getStagedFiles(function (err, list) {
+  getStagedFiles(opts, function (err, list) {
     if (err) return cb(err)
     var files
     try {
