@@ -59,7 +59,7 @@ test('filter staged files', function (t) {
 })
 
 test('run a successful command', function (t) {
-  t.plan(1)
+  t.plan(3)
   var repo = createRepo()
 
   exec('git init', { cwd: repo })
@@ -68,8 +68,12 @@ test('run a successful command', function (t) {
   fs.writeFileSync(path.join(repo, 'index.js'), 'module.exports = require(\'./a\') + require(\'./b\')\n')
   exec('git add index.js a.js b.js', { cwd: repo })
 
-  var proc = spawn(cli, ['*.js', '--', 'standard'], { cwd: repo })
+  var proc = spawn(cli, ['*.js', '--', 'node', require.resolve('./success')], { cwd: repo })
   proc.on('error', t.error)
+  concat(proc.stdout, function (err, buf) {
+    t.ifError(err)
+    t.equal(buf.toString().trim(), 'that worked')
+  })
   proc.on('exit', function (status) {
     t.equal(status, 0)
   })
@@ -85,11 +89,11 @@ test('run a failing command', function (t) {
   fs.writeFileSync(path.join(repo, 'index.js'), 'module.exports = require(\'./a\') + require(\'./b\');')
   exec('git add index.js a.js b.js', { cwd: repo })
 
-  var proc = spawn(cli, ['*.js', '--', 'standard'], { cwd: repo })
+  var proc = spawn(cli, ['*.js', '--', 'node', require.resolve('./fail')], { cwd: repo })
   proc.on('error', t.error)
   concat(proc.stderr, function (err, buf) {
     t.ifError(err)
-    t.ok(buf.toString().length > 100, 'piped `standard` output')
+    t.equal(buf.toString().trim(), 'that did not work')
   })
   proc.on('exit', function (status) {
     t.equal(status, 1)
