@@ -6,9 +6,15 @@
   "bugs": {
     "url": "https://github.com/goto-bus-stop/with-staged/issues"
   },
+  "dependencies": {
+    "micromatch": "^2.3.11",
+    "minimist": "^1.2.0"
+  },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "simple-concat": "^1.0.0",
     "standard": "^11.0.0",
+    "tap-min": "^1.2.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.0.0",
     "tmp": "0.0.33"
@@ -32,10 +38,12 @@
     "url": "https://github.com/goto-bus-stop/with-staged.git"
   },
   "scripts": {
+    "lint-staged": "./bin.js '*.js' -- standard",
+    "tap-min": "node test | tap-min",
     "test": "standard && node test | tap-spec"
   },
-  "dependencies": {
-    "micromatch": "^2.3.11",
-    "minimist": "^1.2.0"
-  }
+  "pre-commit": [
+    "lint-staged",
+    "tap-min"
+  ]
 }
