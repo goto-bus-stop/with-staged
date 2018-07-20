@@ -41,22 +41,19 @@ Example:
   runs `prettier --write index.js test.js etc.js`
 ```
 
-You can use it with `pre-commit` for very lightweight linting on `git commit`:
+You can use it with [`husky`](https://github.com/typicode/husky) for very lightweight linting on `git commit`:
 
 ```json
 {
   "devDependencies": {
-    "pre-commit": "^1.0.0",
+    "husky": "^0.14.0",
     "standard": "^11.0.0",
     "with-staged": "^1.0.0"
   },
   "scripts": {
     "lint": "standard",
-    "lint-staged": "with-staged '**/*.js' -- npm run lint --"
-  },
-  "pre-commit": [
-    "lint-staged"
-  ]
+    "precommit": "with-staged '**/*.js' -- npm run lint --"
+  }
 }
 ```
 
