@@ -6,18 +6,21 @@ var spawn = require('child_process').spawn
 var concat = require('simple-concat')
 var withStaged = require('..')
 var cli = require.resolve('../bin')
-var tmp = require('tmp')
+var uniqueTempDir = require('unique-temp-dir')
+var rimraf = require('rimraf')
 
-function createRepo () {
-  var dir = tmp.dirSync()
-  process.on('exit', dir.removeCallback)
+function createRepo (t) {
+  var dir = uniqueTempDir({ create: true })
+  t.on('end', function () {
+    rimraf.sync(dir)
+  })
 
-  return dir.name
+  return dir
 }
 
 test('nothing staged', function (t) {
   t.plan(3)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
 
@@ -30,7 +33,7 @@ test('nothing staged', function (t) {
 
 test('list staged files', function (t) {
   t.plan(3)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
   exec('touch index.js README.md unstaged.txt', { cwd: repo })
@@ -45,7 +48,7 @@ test('list staged files', function (t) {
 
 test('filter staged files', function (t) {
   t.plan(3)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
   exec('touch index.js README.md unstaged.txt', { cwd: repo })
@@ -60,7 +63,7 @@ test('filter staged files', function (t) {
 
 test('run a successful command', function (t) {
   t.plan(1)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
   fs.writeFileSync(path.join(repo, 'a.js'), 'module.exports = 1\n')
@@ -77,7 +80,7 @@ test('run a successful command', function (t) {
 
 test('run a failing command', function (t) {
   t.plan(3)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
   fs.writeFileSync(path.join(repo, 'a.js'), 'module.exports = 1;')
@@ -98,7 +101,7 @@ test('run a failing command', function (t) {
 
 test('filters on the cli', function (t) {
   t.plan(3)
-  var repo = createRepo()
+  var repo = createRepo(t)
 
   exec('git init', { cwd: repo })
   exec('touch index.js README.md package.json', { cwd: repo })
