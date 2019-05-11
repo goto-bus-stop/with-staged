@@ -41,7 +41,11 @@
   "scripts": {
     "lint-staged": "./bin.js '*.js' -- standard",
     "tap-min": "node test | tap-min",
-    "precommit": "npm run lint-staged && npm run tap-min",
     "test": "standard && node test | tap-spec"
+  },
+  "husky": {
+    "hooks": {
+      "precommit": "npm run lint-staged && npm run tap-min"
+    }
   }
 }
