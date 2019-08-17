@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn
 var mm = require('micromatch')
 
 function getStagedFiles (opts, cb) {
-  var proc = spawn('git', ['diff', '--cached', '--name-only'], { cwd: opts.cwd })
+  var proc = spawn('git', ['diff', '--cached', '--name-only', '--diff-filter=d'], { cwd: opts.cwd })
   var stdout = ''
   proc.stdout.on('data', function (chunk) { stdout += chunk })
   proc.on('error', cb)
