@@ -7,7 +7,7 @@
     "url": "https://github.com/goto-bus-stop/with-staged/issues"
   },
   "dependencies": {
-    "micromatch": "^2.3.11",
+    "micromatch": "^4.0.2",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
