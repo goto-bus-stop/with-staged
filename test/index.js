@@ -8,6 +8,7 @@ var withStaged = require('..')
 var cli = require.resolve('../bin')
 var uniqueTempDir = require('unique-temp-dir')
 var rimraf = require('rimraf')
+var semver = require('semver')
 
 function createRepo (t) {
   var dir = uniqueTempDir({ create: true })
@@ -78,7 +79,7 @@ test('run a successful command', function (t) {
   })
 })
 
-test('run a failing command', function (t) {
+test('run a failing command', { skip: semver.satisfies(process.version, '< 8') }, function (t) {
   t.plan(3)
   var repo = createRepo(t)
 
